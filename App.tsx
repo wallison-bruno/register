@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+//Theme
+import { ThemeProvider } from "styled-components";
+//import { AuthProvider } from "./src/hook/auth";
+import theme from "./src/global/theme";
+import { Routs } from "./src/routes";
+//Loading for fonts
+//import AppLoading from 'expo-app-loading';
 
+//Fonts
+/*import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold
+} from "@expo-google-fonts/poppins";*/
+
+//import { Routs } from "./src/routes"
+
+
+//Start App
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  /*let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
+  */
+  
+    return (
+      <ThemeProvider theme={theme}>
+         <Routs/>
+      </ThemeProvider>
+    )
+  
+}
