@@ -10,6 +10,7 @@ import {
   ContainerScroll,
 } from "./styles";
 
+import { Button } from "../../components/Form/Button";
 import {
   Keyboard,
   Modal,
@@ -19,31 +20,28 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ButtonTransaction } from "../../components/Form/ButtonTransaction";
+import { SelectButton } from "../../components/Form/SelectButton";
+import { Graduations } from "../Graduations";
 import { InputControle } from "../../components/Form/InputControler/inde";
+
 import { useNavigation } from "@react-navigation/native";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "../../components/Form/Button";
-import uuid from "react-native-uuid";
+
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { RootStackParamsList } from "../../routes/register.routes";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-type InformationScreenProps = NativeStackNavigationProp<
-  RootStackParamsList,
-  "Information"
->;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from "react-native-uuid";
 
 const storegeKey = "@gofinacens:Transactons";
 
-export function Information() {
+export function Seizures() {
   interface Form {
     name: string;
     amount: string;
   }
 
-  const navigation = useNavigation<InformationScreenProps>();
+  const navigation = useNavigation();
 
   const [openModal, setOpenModal] = useState(false);
   const [transactionType, setTransacationType] = useState("");
@@ -130,56 +128,8 @@ export function Information() {
       <Container>
         <StatusBar barStyle="light-content" />
         <Header>
-          <Title>1ªCia | BPRE</Title>
+          <Title>Apreensões</Title>
         </Header>
-        <Form>
-          <ContainerScroll>
-            <Position>Informações da Ocorrência</Position>
-            <InputControle
-              placeholder="(M) da Ocorrência"
-              name="name"
-              control={control}
-              keyboardType="default"
-              autoCorrect={false}
-              error={""}
-            />
-            <InputControle
-              placeholder="Data"
-              name="name"
-              control={control}
-              keyboardType="default"
-              autoCorrect={false}
-              error={""}
-            />
-            <InputControle
-              placeholder="Endereço"
-              name="name"
-              control={control}
-              keyboardType="default"
-              autoCorrect={false}
-              error={""}
-            />
-            <Position>Relato da ocorrência</Position>
-            <InputControle
-              placeholder="Texto"
-              name="name"
-              control={control}
-              keyboardType="default"
-              autoCorrect={false}
-              error={""}
-              multiline
-              editable
-              style={styles.textCase}
-            />
-          </ContainerScroll>
-          <Button
-            title="Próximo (1/3)"
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("Patrolling");
-            }}
-          />
-        </Form>
       </Container>
     </TouchableWithoutFeedback>
   );

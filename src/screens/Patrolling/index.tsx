@@ -22,7 +22,7 @@ import {
 } from "react-native";
 import { ButtonTransaction } from "../../components/Form/ButtonTransaction";
 import { SelectButton } from "../../components/Form/SelectButton";
-import { CategorySelect } from "../Graduations";
+import { Graduations } from "../Graduations";
 import { InputControle } from "../../components/Form/InputControler/inde";
 
 import { useNavigation } from "@react-navigation/native";
@@ -32,6 +32,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { RootStackParamsList } from "../../routes/register.routes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type InformationScreenProps = NativeStackNavigationProp<
+  RootStackParamsList,
+  "Patrolling"
+>;
 
 const storegeKey = "@gofinacens:Transactons";
 
@@ -41,7 +48,7 @@ export function Patrolling() {
     amount: string;
   }
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<InformationScreenProps>();
 
   const [openModal, setOpenModal] = useState(false);
   const [transactionType, setTransacationType] = useState("");
@@ -132,6 +139,15 @@ export function Patrolling() {
         </Header>
         <Form>
           <ContainerScroll>
+            <Position>Viatura</Position>
+            <InputControle
+              placeholder="VTR"
+              name="name"
+              control={control}
+              keyboardType="default"
+              autoCorrect={false}
+              error={""}
+            />
             <Position>Comandante</Position>
             <InputControle
               placeholder="QRA"
@@ -152,7 +168,7 @@ export function Patrolling() {
             <SelectButton onPress={handleOpenModal} title={category.name} />
 
             <Modal visible={openModal}>
-              <CategorySelect
+              <Graduations
                 category={category}
                 setCategory={setCategory}
                 selectCatergoryClose={handleCloseModal}
@@ -179,7 +195,7 @@ export function Patrolling() {
             <SelectButton onPress={handleOpenModal} title={category.name} />
 
             <Modal visible={openModal}>
-              <CategorySelect
+              <Graduations
                 category={category}
                 setCategory={setCategory}
                 selectCatergoryClose={handleCloseModal}
@@ -205,7 +221,7 @@ export function Patrolling() {
             <SelectButton onPress={handleOpenModal} title={category.name} />
 
             <Modal visible={openModal}>
-              <CategorySelect
+              <Graduations
                 category={category}
                 setCategory={setCategory}
                 selectCatergoryClose={handleCloseModal}
@@ -213,9 +229,11 @@ export function Patrolling() {
             </Modal>
           </ContainerScroll>
           <Button
-            title="Próximo"
+            title="Próximo (2/3)"
             style={styles.button}
-            //onPress={handleSubmit(handleResgiter)}
+            onPress={() => {
+              navigation.navigate("Seizures");
+            }}
           />
         </Form>
       </Container>
