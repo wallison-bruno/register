@@ -4,7 +4,7 @@ import {
   Container,
   Header,
   Title,
-  Position,
+  Subtitle,
   Form,
   ButtonsTransactions,
   ContainerScroll,
@@ -139,7 +139,7 @@ export function Patrolling() {
         </Header>
         <Form>
           <ContainerScroll>
-            <Position>Viatura</Position>
+            <Subtitle>Viatura</Subtitle>
             <InputControle
               placeholder="VTR"
               name="name"
@@ -148,7 +148,7 @@ export function Patrolling() {
               autoCorrect={false}
               error={""}
             />
-            <Position>Comandante</Position>
+            <Subtitle>Comandante</Subtitle>
             <InputControle
               placeholder="QRA"
               name="name"
@@ -175,7 +175,7 @@ export function Patrolling() {
               />
             </Modal>
 
-            <Position>Motorista</Position>
+            <Subtitle>Motorista</Subtitle>
             <InputControle
               placeholder="QRA"
               name="name"
@@ -201,7 +201,7 @@ export function Patrolling() {
                 selectCatergoryClose={handleCloseModal}
               />
             </Modal>
-            <Position>Patrulehiro</Position>
+            <Subtitle>Patrulehiro</Subtitle>
             <InputControle
               placeholder="QRA"
               name="name"

@@ -4,7 +4,7 @@ import {
   Container,
   Header,
   Title,
-  Position,
+  Subtitle,
   Form,
   ButtonsTransactions,
   ContainerScroll,
@@ -130,13 +130,21 @@ export function Information() {
       <Container>
         <StatusBar barStyle="light-content" />
         <Header>
-          <Title>1ªCia | BPRE</Title>
+          <Title>1ªCIA | BPRE</Title>
         </Header>
         <Form>
           <ContainerScroll>
-            <Position>Informações da Ocorrência</Position>
+            <Subtitle>Informações da Ocorrência</Subtitle>
             <InputControle
               placeholder="(M) da Ocorrência"
+              name="name"
+              control={control}
+              keyboardType="default"
+              autoCorrect={false}
+              error={""}
+            />
+            <InputControle
+              placeholder="Delegacia"
               name="name"
               control={control}
               keyboardType="default"
@@ -151,6 +159,7 @@ export function Information() {
               autoCorrect={false}
               error={""}
             />
+            <Subtitle>Local</Subtitle>
             <InputControle
               placeholder="Endereço"
               name="name"
@@ -159,7 +168,15 @@ export function Information() {
               autoCorrect={false}
               error={""}
             />
-            <Position>Relato da ocorrência</Position>
+            <InputControle
+              placeholder="AIs"
+              name="name"
+              control={control}
+              keyboardType="default"
+              autoCorrect={false}
+              error={""}
+            />
+            <Subtitle>Relato da ocorrência</Subtitle>
             <InputControle
               placeholder="Texto"
               name="name"

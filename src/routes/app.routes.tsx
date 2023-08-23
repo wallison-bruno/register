@@ -1,10 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { RFValue } from "react-native-responsive-fontsize";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Patrolling } from "../screens/Patrolling";
-import { User } from "../screens/User";
-import { useTheme } from "styled-components";
 import RegisterRouts from "./register.routes";
+import { useTheme } from "styled-components";
+import { User } from "../screens/User";
 export default function AppRouts() {
   const Tab = createBottomTabNavigator();
   const theme = useTheme();
@@ -28,11 +28,11 @@ export default function AppRouts() {
         tabBarLabelPosition: "beside-icon",
         tabBarLabelStyle: {
           fontFamily: theme.fonts.regular,
-          fontSize: 16,
+          fontSize: RFValue(13),
         },
         tabBarStyle: {
-          height: 68,
-          paddingLeft: 16,
+          height: RFValue(80),
+          paddingLeft: RFValue(24),
         },
       })}
     >

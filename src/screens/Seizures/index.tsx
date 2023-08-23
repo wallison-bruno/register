@@ -4,7 +4,7 @@ import {
   Container,
   Header,
   Title,
-  Position,
+  Subtitle,
   Form,
   ButtonsTransactions,
   ContainerScroll,
@@ -32,6 +32,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import Checkbox from "../../components/Form/CheckBoox";
 
 const storegeKey = "@gofinacens:Transactons";
 
@@ -130,6 +131,18 @@ export function Seizures() {
         <Header>
           <Title>Apreensões</Title>
         </Header>
+        <Form>
+          <Subtitle>Selecione os itens apreendidos</Subtitle>
+          <Checkbox label="Armas" />
+          <Checkbox label="Veículos" />
+          <Checkbox label="Drogas" />
+          <Checkbox label="Outros" />
+          <Button
+            title="Próximo (3/3)"
+            style={styles.button}
+            onPress={() => {}}
+          />
+        </Form>
       </Container>
     </TouchableWithoutFeedback>
   );
