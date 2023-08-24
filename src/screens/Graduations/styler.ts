@@ -7,7 +7,6 @@ interface CategoryContainer {
     isSelect: boolean
 }
 
-
 export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.backgroud};  
@@ -32,7 +31,7 @@ export const CategoryContainer = styled.TouchableOpacity<CategoryContainer>`
         isSelect === true ? theme.colors.text : theme.colors.shape} ;
     width: 100%;
     flex-direction: row;
-    padding: ${RFValue(15)}px;
+    padding: ${RFValue(12)}px;
     align-items: center;
 `;
 

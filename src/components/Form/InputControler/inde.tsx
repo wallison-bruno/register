@@ -7,12 +7,13 @@ import { Container, Error } from "./styled";
 interface Props extends TextInputProps {
     name: string,
     control: Control
-    error: string
+    error: any
 }
 
 export function InputControle({ name, control, error, ...rest }: Props) {
     return (
         <Container>
+            {error && <Error> {error} </Error>}
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -25,7 +26,7 @@ export function InputControle({ name, control, error, ...rest }: Props) {
                 )}
                 name={name}
             />
-            {error && <Error> {error} </Error>}
+            
         </Container>
     )
 }

@@ -14,7 +14,7 @@ export const CheckboxContainer = styled(TouchableOpacity)`
   color: ${({ theme }) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.regular};
   border-radius: ${RFValue(5)}px;
-  padding: ${RFValue(18)}px;
+  padding: ${RFValue(14)}px;
   margin-bottom: ${RFValue(8)}px;
 `;
 
@@ -28,5 +28,6 @@ export const CheckboxLabel = styled.Text<CheckboxProps>`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme, isChecked }) =>
-    isChecked ? theme.colors.title : theme.colors.text};
+    isChecked ? theme.colors.text_dark
+     : theme.colors.text};
 `;

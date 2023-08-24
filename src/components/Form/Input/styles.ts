@@ -8,6 +8,6 @@ export const Container = styled.TextInput`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size:  ${RFValue(14)}px;
     border-radius: 5px;
-    padding: 18px;
+    padding:${RFValue(14)}px;
     margin-bottom:  ${RFValue(8)}px;
 `;

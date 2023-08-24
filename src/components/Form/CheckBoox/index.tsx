@@ -20,13 +20,13 @@ const Checkbox: React.FC<CheckboxProps> = ({ label }) => {
         {isChecked ? (
           <MaterialCommunityIcons
             name="checkbox-marked-circle"
-            size={RFValue(26)}
+            size={RFValue(20)}
             color={theme.colors.secundary}
           />
         ) : (
           <MaterialCommunityIcons
             name="checkbox-blank-circle-outline"
-            size={RFValue(26)}
+            size={RFValue(20)}
             color={theme.colors.text}
           />
         )}

@@ -9,7 +9,7 @@ export const Container = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.shape};
     width: 100%;
     border-radius: 5px;
-    padding: 18px;
+    padding: ${RFValue(14)}px;
 `;
 
 export const Title = styled.Text`

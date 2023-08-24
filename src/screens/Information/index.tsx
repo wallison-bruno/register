@@ -26,7 +26,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../components/Form/Button";
 import uuid from "react-native-uuid";
 import * as yup from "yup";
-
 import { RootStackParamsList } from "../../routes/register.routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -39,8 +38,13 @@ const storegeKey = "@gofinacens:Transactons";
 
 export function Information() {
   interface Form {
-    name: string;
-    amount: string;
+    numeroOrrencia: number;
+    delegacia: string;
+    endereco:string;
+    data: string;
+    local:string;
+    ais:string;
+    relato: string;
   }
 
   const navigation = useNavigation<InformationScreenProps>();
@@ -54,15 +58,18 @@ export function Information() {
   });
 
   const schema = yup
-    .object({
-      name: yup.string().required("Nome é obrigatório"),
-      amount: yup
-        .number()
-        .typeError("Informe apenas valores numéricos")
-        .positive("O valor não pode ser negativo")
-        .required("O valor é obrigatório"),
+    .object().shape({
+      numeroOcorrencia: yup
+      .number()
+      .typeError("Informe apenas valores numéricos")
+      .positive("O valor não pode ser negativo")
+      .required("O número é obrigatório"),
+      delegacia: yup.string().required("A delegacia é obrigatória"),
+      endereco:  yup.string().required("Endereço é obrigatório"),
+      data: yup.string().required("A data é obrigatória"),
+      ais: yup.string().required("A Ais é obrigatória"),
+      relato:yup.string().required("O reláto é obrigatório"),
     })
-    .required();
 
   const {
     control,
@@ -73,35 +80,22 @@ export function Information() {
     resolver: yupResolver<yup.AnyObject>(schema),
   });
 
-  function handleTransactionsTaypeSelect(type: "up" | "down") {
-    setTransacationType(type);
-  }
 
-  function handleOpenModal() {
-    setOpenModal(true);
-  }
-
-  function handleCloseModal() {
-    setOpenModal(false);
-  }
-
-  async function handleResgiter(form: Form) {
-    if (!transactionType) {
-      return Alert.alert("Selecione o tipo da transação.");
-    }
-    if (category.key === "category") {
-      return Alert.alert("Selecione a categoria.");
-    }
+  async function handleResgister(form: yup.AnyObject) {
+  
     const newTransiction = {
       id: uuid.v4(),
-      date: new Date(),
-      name: form.name,
-      amount: form.amount,
-      category: category.key,
-      type: transactionType,
+      numeroOcorrencia: form.numeroOrrencia,
+      data:  form.data,
+      delegacia: form.delegacia,
+      endereco: form.delegacia,
+      ais: form.ais,
+      relato: form.relato,
     };
 
-    try {
+    
+
+    /*try {
       const allTransacations = await AsyncStorage.getItem(storegeKey);
       const currentTransacations = allTransacations
         ? JSON.parse(allTransacations)
@@ -118,13 +112,14 @@ export function Information() {
         name: "Categoria",
       });
       // Redirecionando para screen de Dashborad.
-      //navigation.navigate("Listagem");
+      navigation.navigate("Listagem");
     } catch (erro) {
       console.log(erro);
       Alert.alert("Não foi possível cadastrar");
-    }
+    }*/
+    navigation.navigate("Patrolling");
   }
-
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -137,53 +132,53 @@ export function Information() {
             <Subtitle>Informações da Ocorrência</Subtitle>
             <InputControle
               placeholder="(M) da Ocorrência"
-              name="name"
+              name="numeroOcorrencia"
               control={control}
-              keyboardType="default"
+              keyboardType="numeric"
               autoCorrect={false}
-              error={""}
+              error={errors.numeroOcorrencia && errors.numeroOcorrencia.message} 
             />
             <InputControle
               placeholder="Delegacia"
-              name="name"
+              name="delegacia"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.delegacia && errors.delegacia.message}
             />
             <InputControle
               placeholder="Data"
-              name="name"
+              name="data"
               control={control}
-              keyboardType="default"
+              keyboardType="numeric"
               autoCorrect={false}
-              error={""}
+              error={errors.data && errors.data.message}
             />
             <Subtitle>Local</Subtitle>
             <InputControle
               placeholder="Endereço"
-              name="name"
+              name="endereco"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.endereco && errors.endereco.message}
             />
             <InputControle
               placeholder="AIs"
-              name="name"
+              name="ais"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.ais && errors.ais.message}
             />
             <Subtitle>Relato da ocorrência</Subtitle>
             <InputControle
               placeholder="Texto"
-              name="name"
+              name="relato"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.relato && errors.relato.message}
               multiline
               editable
               style={styles.textCase}
@@ -192,9 +187,7 @@ export function Information() {
           <Button
             title="Próximo (1/3)"
             style={styles.button}
-            onPress={() => {
-              navigation.navigate("Patrolling");
-            }}
+            onPress={handleSubmit(handleResgister)} 
           />
         </Form>
       </Container>
