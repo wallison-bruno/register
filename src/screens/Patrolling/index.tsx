@@ -51,6 +51,9 @@ export function Patrolling() {
   const navigation = useNavigation<InformationScreenProps>();
 
   const [openModal, setOpenModal] = useState(false);
+  const [openModalMot, setOpenModalMot] = useState(false);
+  const [openModalCmd, setOpenModalCmd] = useState(false);
+  
   const [transactionType, setTransacationType] = useState("");
 
   const [category, setCategory] = useState({
@@ -58,14 +61,32 @@ export function Patrolling() {
     name: "Posto / Graduação",
   });
 
+  const [categoryMot, setCategoryMot] = useState({
+    key: "category",
+    name: "Posto / Graduação",
+  });
+
+  const [categoryCmd, setCategoryCmd] = useState({
+    key: "category",
+    name: "Posto / Graduação",
+  });
+
+  const qra = yup.string().required("Nome de guerra é obrigatório")
+  const number =  yup
+  .number()
+  .typeError("Informe apenas valores numéricos")
+  .positive("O valor não pode ser negativo")
+  .required("O valor é obrigatório")
+
   const schema = yup
     .object({
-      name: yup.string().required("Nome é obrigatório"),
-      amount: yup
-        .number()
-        .typeError("Informe apenas valores numéricos")
-        .positive("O valor não pode ser negativo")
-        .required("O valor é obrigatório"),
+      vtr: yup.string().required('Título da VTR é obrigatório'),
+      qracmd: qra,
+      numcmd: number,
+      qrapat: qra,
+      numpat: number,
+      qramot: qra,
+      nummot: number, 
     })
     .required();
 
@@ -86,48 +107,22 @@ export function Patrolling() {
     setOpenModal(true);
   }
 
-  function handleCloseModal() {
-    setOpenModal(false);
+  function handleOpenModalMot() {
+    setOpenModalMot(true);
   }
 
-  async function handleResgiter(form: Form) {
-    if (!transactionType) {
-      return Alert.alert("Selecione o tipo da transação.");
-    }
-    if (category.key === "category") {
-      return Alert.alert("Selecione a categoria.");
-    }
-    const newTransiction = {
-      id: uuid.v4(),
-      date: new Date(),
-      name: form.name,
-      amount: form.amount,
-      category: category.key,
-      type: transactionType,
-    };
+  function handleOpenModalCmd() {
+    setOpenModalCmd(true);
+  }
 
-    try {
-      const allTransacations = await AsyncStorage.getItem(storegeKey);
-      const currentTransacations = allTransacations
-        ? JSON.parse(allTransacations)
-        : [];
+  function handleCloseModal() {
+    setOpenModal(false);
+    setOpenModalMot(false);
+    setOpenModalCmd(false);
+  }
 
-      const transactions = [...currentTransacations, newTransiction];
-
-      await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
-
-      reset();
-      setTransacationType("");
-      setCategory({
-        key: "category",
-        name: "Categoria",
-      });
-      // Redirecionando para screen de Dashborad.
-      //navigation.navigate("Listagem");
-    } catch (erro) {
-      console.log(erro);
-      Alert.alert("Não foi possível cadastrar");
-    }
+  async function handleResgiter(form: yup.AnyObject) {
+      navigation.navigate('Seizures')
   }
 
   return (
@@ -142,35 +137,34 @@ export function Patrolling() {
             <Subtitle>Viatura</Subtitle>
             <InputControle
               placeholder="VTR"
-              name="name"
+              name="vtr"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.vtr && errors.vtr.message}
             />
             <Subtitle>Comandante</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="name"
+              name="qracmd"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.qracmd && errors.qracmd.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="amount"
+              name="numcmd"
               control={control}
               keyboardType="numeric"
-              error={""}
+              error={errors.numcmd && errors.numcmd.message}
             />
 
-            <SelectButton onPress={handleOpenModal} title={category.name} />
-
-            <Modal visible={openModal}>
+            <SelectButton onPress={handleOpenModalCmd} title={categoryCmd.name} />
+            <Modal visible={openModalCmd}>
               <Graduations
-                category={category}
-                setCategory={setCategory}
+                category={categoryCmd}
+                setCategory={setCategoryCmd}
                 selectCatergoryClose={handleCloseModal}
               />
             </Modal>
@@ -178,48 +172,46 @@ export function Patrolling() {
             <Subtitle>Motorista</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="name"
+              name="qramot"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.qramot && errors.qramot.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="amount"
+              name="nummot"
               control={control}
               keyboardType="numeric"
-              error={""}
+              error={errors.nummot && errors.nummot.message}
             />
 
-            <SelectButton onPress={handleOpenModal} title={category.name} />
+            <SelectButton onPress={handleOpenModalMot} title={categoryMot.name} />
 
-            <Modal visible={openModal}>
+            <Modal visible={openModalMot}>
               <Graduations
-                category={category}
-                setCategory={setCategory}
+                category={categoryMot}
+                setCategory={setCategoryMot}
                 selectCatergoryClose={handleCloseModal}
               />
             </Modal>
             <Subtitle>Patrulehiro</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="name"
+              name="qrapat"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={""}
+              error={errors.qrapat && errors.qrapat.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="amount"
+              name="numpat"
               control={control}
               keyboardType="numeric"
-              error={""}
+              error={errors.numpat && errors.numpat.message}
             />
-
             <SelectButton onPress={handleOpenModal} title={category.name} />
-
             <Modal visible={openModal}>
               <Graduations
                 category={category}
@@ -231,9 +223,7 @@ export function Patrolling() {
           <Button
             title="Próximo (2/3)"
             style={styles.button}
-            onPress={() => {
-              navigation.navigate("Seizures");
-            }}
+            onPress={handleSubmit(handleResgiter)}
           />
         </Form>
       </Container>

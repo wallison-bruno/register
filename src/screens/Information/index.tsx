@@ -187,7 +187,7 @@ export function Information() {
           <Button
             title="Próximo (1/3)"
             style={styles.button}
-            onPress={handleSubmit(handleResgister)} 
+            onPress={()=>{navigation.navigate("Patrolling")}} 
           />
         </Form>
       </Container>
