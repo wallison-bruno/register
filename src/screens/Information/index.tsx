@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
-  Container,
-  Header,
-  Title,
-  Subtitle,
   Form,
+  Title,
+  Header,
+  Subtitle,
+  Container,
   ButtonsTransactions,
   ContainerScroll,
 } from "./styles";
 
 import {
-  Keyboard,
-  Modal,
   View,
-  TouchableWithoutFeedback,
+  Modal,
   Alert,
+  Keyboard,
   StatusBar,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { InputControle } from "../../components/Form/InputControler/inde";
@@ -93,8 +93,6 @@ export function Information() {
       relato: form.relato,
     };
 
-    
-
     /*try {
       const allTransacations = await AsyncStorage.getItem(storegeKey);
       const currentTransacations = allTransacations
@@ -130,7 +128,8 @@ export function Information() {
         <Form>
           <ContainerScroll>
             <Subtitle>Informações da Ocorrência</Subtitle>
-            <InputControle
+            <InputControle 
+              type="only-numbers"           
               placeholder="(M) da Ocorrência"
               name="numeroOcorrencia"
               control={control}
@@ -139,6 +138,7 @@ export function Information() {
               error={errors.numeroOcorrencia && errors.numeroOcorrencia.message} 
             />
             <InputControle
+              type="custom"            
               placeholder="Delegacia"
               name="delegacia"
               control={control}
@@ -147,7 +147,12 @@ export function Information() {
               error={errors.delegacia && errors.delegacia.message}
             />
             <InputControle
+            
+              type='datetime'
               placeholder="Data"
+              options={{
+                format: 'DD/MM/YYYY'
+              }}
               name="data"
               control={control}
               keyboardType="numeric"
@@ -156,6 +161,7 @@ export function Information() {
             />
             <Subtitle>Local</Subtitle>
             <InputControle
+            type="custom"
               placeholder="Endereço"
               name="endereco"
               control={control}
@@ -164,6 +170,7 @@ export function Information() {
               error={errors.endereco && errors.endereco.message}
             />
             <InputControle
+            type="custom"
               placeholder="AIs"
               name="ais"
               control={control}
@@ -173,6 +180,7 @@ export function Information() {
             />
             <Subtitle>Relato da ocorrência</Subtitle>
             <InputControle
+            type="custom"
               placeholder="Texto"
               name="relato"
               control={control}
@@ -187,7 +195,7 @@ export function Information() {
           <Button
             title="Próximo (1/3)"
             style={styles.button}
-            onPress={()=>{navigation.navigate("Patrolling")}} 
+            onPress={handleSubmit(handleResgister)} 
           />
         </Form>
       </Container>
