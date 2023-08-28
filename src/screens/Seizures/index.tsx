@@ -72,10 +72,6 @@ export function Seizures() {
     resolver: yupResolver<yup.AnyObject>(schema),
   });
 
-  function handleTransactionsTaypeSelect(type: "up" | "down") {
-    setTransacationType(type);
-  }
-
   function handleOpenModal() {
     setOpenModal(true);
   }
@@ -84,40 +80,18 @@ export function Seizures() {
     setOpenModal(false);
   }
 
-  async function handleResgiter(form: Form) {
-    if (!transactionType) {
-      return Alert.alert("Selecione o tipo da transação.");
-    }
-    if (category.key === "category") {
-      return Alert.alert("Selecione a categoria.");
-    }
-    const newTransiction = {
-      id: uuid.v4(),
-      date: new Date(),
-      name: form.name,
-      amount: form.amount,
-      category: category.key,
-      type: transactionType,
-    };
-
+  async function handleRegister(form: Form) {
+    const newReport = {};
     try {
-      const allTransacations = await AsyncStorage.getItem(storegeKey);
-      const currentTransacations = allTransacations
-        ? JSON.parse(allTransacations)
-        : [];
+      const allReports = await AsyncStorage.getItem(storegeKey);
+      const currentReports = allReports ? JSON.parse(allReports) : [];
 
-      const transactions = [...currentTransacations, newTransiction];
+      const reports = [...currentReports, newReport];
 
-      await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
+      await AsyncStorage.setItem(storegeKey, JSON.stringify(reports));
 
-      reset();
-      setTransacationType("");
-      setCategory({
-        key: "category",
-        name: "Categoria",
-      });
-      // Redirecionando para screen de Dashborad.
-      //navigation.navigate("Listagem");
+      // Redirecionando para alguma screen.
+      // navigation.navigate("Listagem");
     } catch (erro) {
       console.log(erro);
       Alert.alert("Não foi possível cadastrar");
@@ -133,10 +107,10 @@ export function Seizures() {
         </Header>
         <Form>
           <Subtitle>Selecione os itens apreendidos</Subtitle>
-          <Checkbox label="Armas" />
-          <Checkbox label="Veículos" />
-          <Checkbox label="Drogas" />
-          <Checkbox label="Outros" />
+          <Checkbox label="Armas" key={"armas"} />
+          <Checkbox label="Veículos" key={"veiculo"} />
+          <Checkbox label="Drogas" key={"drogas"} />
+          <Checkbox label="Outros" key={"outros"} />
           <Button
             title="Próximo (3/3)"
             style={styles.button}

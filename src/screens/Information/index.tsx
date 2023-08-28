@@ -24,6 +24,8 @@ import { InputControle } from "../../components/Form/InputControler/inde";
 import { useNavigation } from "@react-navigation/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../components/Form/Button";
+import { Masks } from "react-native-mask-input";
+
 import uuid from "react-native-uuid";
 import * as yup from "yup";
 import { RootStackParamsList } from "../../routes/register.routes";
@@ -34,16 +36,16 @@ type InformationScreenProps = NativeStackNavigationProp<
   "Information"
 >;
 
-const storegeKey = "@gofinacens:Transactons";
+const storegeKey = "@register:Reports";
 
 export function Information() {
   interface Form {
     numeroOrrencia: number;
     delegacia: string;
-    endereco:string;
+    endereco: string;
     data: string;
-    local:string;
-    ais:string;
+    local: string;
+    ais: string;
     relato: string;
   }
 
@@ -57,19 +59,18 @@ export function Information() {
     name: "Posto / Graduação",
   });
 
-  const schema = yup
-    .object().shape({
-      numeroOcorrencia: yup
+  const schema = yup.object().shape({
+    numeroOcorrencia: yup
       .number()
       .typeError("Informe apenas valores numéricos")
       .positive("O valor não pode ser negativo")
       .required("O número é obrigatório"),
-      delegacia: yup.string().required("A delegacia é obrigatória"),
-      endereco:  yup.string().required("Endereço é obrigatório"),
-      data: yup.string().required("A data é obrigatória"),
-      ais: yup.string().required("A Ais é obrigatória"),
-      relato:yup.string().required("O reláto é obrigatório"),
-    })
+    delegacia: yup.string().required("A delegacia é obrigatória"),
+    endereco: yup.string().required("Endereço é obrigatório"),
+    data: yup.string().required("A data é obrigatória"),
+    ais: yup.string().required("A Ais é obrigatória"),
+    relato: yup.string().required("O relato é obrigatório"),
+  });
 
   const {
     control,
@@ -80,65 +81,39 @@ export function Information() {
     resolver: yupResolver<yup.AnyObject>(schema),
   });
 
-
-  async function handleResgister(form: yup.AnyObject) {
-  
-    const newTransiction = {
-      id: uuid.v4(),
+  async function handleRegister(form: yup.AnyObject) {
+    const idReport = uuid.v4();
+    const newReport = {
+      id: idReport,
       numeroOcorrencia: form.numeroOrrencia,
-      data:  form.data,
+      data: form.data,
       delegacia: form.delegacia,
       endereco: form.delegacia,
       ais: form.ais,
       relato: form.relato,
     };
-
-    /*try {
-      const allTransacations = await AsyncStorage.getItem(storegeKey);
-      const currentTransacations = allTransacations
-        ? JSON.parse(allTransacations)
-        : [];
-
-      const transactions = [...currentTransacations, newTransiction];
-
-      await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
-
-      reset();
-      setTransacationType("");
-      setCategory({
-        key: "category",
-        name: "Categoria",
-      });
-      // Redirecionando para screen de Dashborad.
-      navigation.navigate("Listagem");
-    } catch (erro) {
-      console.log(erro);
-      Alert.alert("Não foi possível cadastrar");
-    }*/
     navigation.navigate("Patrolling");
   }
-  
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <StatusBar barStyle="light-content" />
         <Header>
-          <Title>1ªCIA | BPRE</Title>
+          <Title>1ª CIA | BPRE</Title>
         </Header>
         <Form>
           <ContainerScroll>
             <Subtitle>Informações da Ocorrência</Subtitle>
-            <InputControle 
-              type="only-numbers"           
+            <InputControle
               placeholder="(M) da Ocorrência"
               name="numeroOcorrencia"
               control={control}
               keyboardType="numeric"
               autoCorrect={false}
-              error={errors.numeroOcorrencia && errors.numeroOcorrencia.message} 
+              error={errors.numeroOcorrencia && errors.numeroOcorrencia.message}
             />
             <InputControle
-              type="custom"            
               placeholder="Delegacia"
               name="delegacia"
               control={control}
@@ -147,12 +122,8 @@ export function Information() {
               error={errors.delegacia && errors.delegacia.message}
             />
             <InputControle
-            
-              type='datetime'
+              mask={Masks.DATE_DDMMYYYY}
               placeholder="Data"
-              options={{
-                format: 'DD/MM/YYYY'
-              }}
               name="data"
               control={control}
               keyboardType="numeric"
@@ -161,7 +132,6 @@ export function Information() {
             />
             <Subtitle>Local</Subtitle>
             <InputControle
-            type="custom"
               placeholder="Endereço"
               name="endereco"
               control={control}
@@ -170,7 +140,6 @@ export function Information() {
               error={errors.endereco && errors.endereco.message}
             />
             <InputControle
-            type="custom"
               placeholder="AIs"
               name="ais"
               control={control}
@@ -180,7 +149,6 @@ export function Information() {
             />
             <Subtitle>Relato da ocorrência</Subtitle>
             <InputControle
-            type="custom"
               placeholder="Texto"
               name="relato"
               control={control}
@@ -195,7 +163,7 @@ export function Information() {
           <Button
             title="Próximo (1/3)"
             style={styles.button}
-            onPress={handleSubmit(handleResgister)} 
+            onPress={handleSubmit(handleRegister)}
           />
         </Form>
       </Container>

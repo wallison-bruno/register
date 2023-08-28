@@ -25,9 +25,8 @@ export const CheckboxIcon = styled.View`
 `;
 
 export const CheckboxLabel = styled.Text<CheckboxProps>`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme, isChecked }) =>
-    isChecked ? theme.colors.text_dark
-     : theme.colors.text};
+    isChecked ? theme.colors.text_dark : theme.colors.text};
 `;

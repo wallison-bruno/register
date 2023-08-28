@@ -43,18 +43,11 @@ type InformationScreenProps = NativeStackNavigationProp<
 const storegeKey = "@gofinacens:Transactons";
 
 export function Patrolling() {
-  interface Form {
-    name: string;
-    amount: string;
-  }
-
   const navigation = useNavigation<InformationScreenProps>();
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalMot, setOpenModalMot] = useState(false);
   const [openModalCmd, setOpenModalCmd] = useState(false);
-  
-  const [transactionType, setTransacationType] = useState("");
 
   const [category, setCategory] = useState({
     key: "category",
@@ -71,22 +64,22 @@ export function Patrolling() {
     name: "Posto / Graduação",
   });
 
-  const qra = yup.string().required("Nome de guerra é obrigatório")
-  const number =  yup
-  .number()
-  .typeError("Informe apenas valores numéricos")
-  .positive("O valor não pode ser negativo")
-  .required("O valor é obrigatório")
+  const qra = yup.string().required("Nome de guerra é obrigatório");
+  const number = yup
+    .number()
+    .typeError("Informe apenas valores numéricos")
+    .positive("O valor não pode ser negativo")
+    .required("O valor é obrigatório");
 
   const schema = yup
     .object({
-      vtr: yup.string().required('Título da VTR é obrigatório'),
-      qracmd: qra,
-      numcmd: number,
-      qrapat: qra,
-      numpat: number,
-      qramot: qra,
-      nummot: number, 
+      vtr: yup.string().required("Título da VTR é obrigatório"),
+      qraCmd: qra,
+      numCmd: number,
+      qraPat: qra,
+      numPat: number,
+      qraMot: qra,
+      numMot: number,
     })
     .required();
 
@@ -98,10 +91,6 @@ export function Patrolling() {
   } = useForm({
     resolver: yupResolver<yup.AnyObject>(schema),
   });
-
-  function handleTransactionsTaypeSelect(type: "up" | "down") {
-    setTransacationType(type);
-  }
 
   function handleOpenModal() {
     setOpenModal(true);
@@ -121,8 +110,19 @@ export function Patrolling() {
     setOpenModalCmd(false);
   }
 
-  async function handleResgiter(form: yup.AnyObject) {
-      navigation.navigate('Seizures')
+  async function handleRegister(form: yup.AnyObject) {
+    const newPatrolling = {
+      vtr: form.vtr,
+      comandante: {
+        qra: form.qraCmd,
+        numeral: form.umCmd,
+        categoria: {
+          key: categoryCmd.key,
+          name: categoryCmd.name,
+        },
+      },
+    };
+    navigation.navigate("Seizures");
   }
 
   return (
@@ -146,21 +146,24 @@ export function Patrolling() {
             <Subtitle>Comandante</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="qracmd"
+              name="qraCmd"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={errors.qracmd && errors.qracmd.message}
+              error={errors.qraCmd && errors.qraCmd.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="numcmd"
+              name="numCmd"
               control={control}
               keyboardType="numeric"
-              error={errors.numcmd && errors.numcmd.message}
+              error={errors.numCmd && errors.numCmd.message}
             />
 
-            <SelectButton onPress={handleOpenModalCmd} title={categoryCmd.name} />
+            <SelectButton
+              onPress={handleOpenModalCmd}
+              title={categoryCmd.name}
+            />
             <Modal visible={openModalCmd}>
               <Graduations
                 category={categoryCmd}
@@ -172,21 +175,24 @@ export function Patrolling() {
             <Subtitle>Motorista</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="qramot"
+              name="qraMot"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={errors.qramot && errors.qramot.message}
+              error={errors.qraMot && errors.qraMot.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="nummot"
+              name="numMot"
               control={control}
               keyboardType="numeric"
-              error={errors.nummot && errors.nummot.message}
+              error={errors.numMot && errors.numMot.message}
             />
 
-            <SelectButton onPress={handleOpenModalMot} title={categoryMot.name} />
+            <SelectButton
+              onPress={handleOpenModalMot}
+              title={categoryMot.name}
+            />
 
             <Modal visible={openModalMot}>
               <Graduations
@@ -198,18 +204,18 @@ export function Patrolling() {
             <Subtitle>Patrulehiro</Subtitle>
             <InputControle
               placeholder="QRA"
-              name="qrapat"
+              name="qraPat"
               control={control}
               keyboardType="default"
               autoCorrect={false}
-              error={errors.qrapat && errors.qrapat.message}
+              error={errors.qraPat && errors.qraPat.message}
             />
             <InputControle
               placeholder="Numeral"
-              name="numpat"
+              name="numPat"
               control={control}
               keyboardType="numeric"
-              error={errors.numpat && errors.numpat.message}
+              error={errors.numPat && errors.numPat.message}
             />
             <SelectButton onPress={handleOpenModal} title={category.name} />
             <Modal visible={openModal}>
@@ -223,7 +229,7 @@ export function Patrolling() {
           <Button
             title="Próximo (2/3)"
             style={styles.button}
-            onPress={handleSubmit(handleResgiter)}
+            onPress={handleSubmit(handleRegister)}
           />
         </Form>
       </Container>

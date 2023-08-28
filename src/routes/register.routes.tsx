@@ -7,9 +7,9 @@ import { Seizures } from "../screens/Seizures";
 const { Navigator, Screen } = createStackNavigator();
 
 export type RootStackParamsList = {
+  Seizures: undefined;
   Information: undefined;
   Patrolling: undefined;
-  Seizures: undefined;
 };
 
 export default function RegisterRouts() {
