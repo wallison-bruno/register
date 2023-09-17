@@ -1,3 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from "react-native-uuid";
+
 import React, {
   createContext,
   ReactNode,
@@ -6,45 +9,106 @@ import React, {
   useState,
 } from "react";
 
-
-export interface Information{
-  
+//mudar any para tipos mais espesíficos
+export interface Information {
+  id: any;
+  numeroOcorrencia: any;
+  data: any;
+  delegacia: any;
+  endereco: any;
+  ais: any;
+  relato: any;
 }
 
-export interface Patrolling{
- 
+export interface Patrolling {
+  vtr: any;
+  comandante: {
+    qra: any;
+    numeral: any;
+    categoria: {
+      key: any;
+      name: any;
+    };
+  };
+  motorista: {
+    qra: any;
+    numeral: any;
+    categoria: {
+      key: any;
+      name: any;
+    };
+  };
+  patrulheiro: {
+    qra: any;
+    numeral: any;
+    categoria: {
+      key: any;
+      name: any;
+    };
+  };
 }
 
-export interface Seizures{
- 
+export interface Seizures {
+  armas: any;
+  drogas: any;
+  veiculos: any;
 }
 
-interface RegisterProviderProps {
+interface OccorrenceProviderProps {
   children: ReactNode;
 }
 
-interface RegisterData {
-  
-}
+interface OccorrenceData {}
 
-export const RegisterContext = createContext<RegisterData>({} as RegisterData);
+const storegeKey = "@gofinacens:Transactons";
 
-export function RegisterProvider({ children }: RegisterProviderProps) {
+export const OccorrenceContext = createContext<OccorrenceData>(
+  {} as OccorrenceData
+);
 
+export function OccorrenceProvider({ children }: OccorrenceProviderProps) {
+  const [information, setInformation] = useState<Information>();
+  const [patrolling, setPatrolling] = useState<Patrolling>();
+  const [seizures, setSeizures] = useState<Seizures>();
 
+  function handleInformation(information: Information) {
+    setInformation(information);
+  }
+
+  //fazer os outros dois handles da corroencia
+
+  async function handleSaveOccorrence(
+    inform: Information,
+    patrolling: Patrolling,
+    seizures: Seizures
+  ) {
+    // Veririficar se todos os parametros passados por esste método não estão null
+    const newOccorrence = {
+      Informação: inform,
+      Patrulha: patrolling,
+      apreencoes: seizures,
+    };
+
+    try {
+      const allOccorrence = await AsyncStorage.getItem(storegeKey);
+      const currentOccorrence = allOccorrence ? JSON.parse(allOccorrence) : [];
+
+      const transactions = [...currentOccorrence, newOccorrence];
+
+      await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
+    } catch (erro) {
+      console.log(erro);
+    }
+  }
 
   return (
-    <RegisterContext.Provider
-      value={{
-        
-      }}
-    >
+    <OccorrenceContext.Provider value={{}}>
       {children}
-    </RegisterContext.Provider>
+    </OccorrenceContext.Provider>
   );
 }
 
-export function useRegisters() {
-  const context = useContext(RegisterContext);
+export function useOccorrence() {
+  const context = useContext(OccorrenceContext);
   return context;
 }
