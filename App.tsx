@@ -17,21 +17,18 @@ import { Routs } from "./src/routes";
 
 //import { Routs } from "./src/routes"
 
-
 //Start App
 export default function App() {
-
   /*let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_700Bold,
   });
   */
-  
-    return (
-      <ThemeProvider theme={theme}>
-         <Routs/>
-      </ThemeProvider>
-    )
-  
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Routs />
+    </ThemeProvider>
+  );
 }
