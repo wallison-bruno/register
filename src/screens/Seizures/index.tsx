@@ -1,37 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  Container,
-  Header,
-  Title,
-  Subtitle,
-  Form,
-  ButtonsTransactions,
-  ContainerScroll,
-} from "./styles";
+import { Container, Header, Title, Subtitle, Form } from "./styles";
 
 import { Button } from "../../components/Form/Button";
 import {
   Keyboard,
-  Modal,
-  View,
   TouchableWithoutFeedback,
   Alert,
   StatusBar,
   StyleSheet,
 } from "react-native";
-import { ButtonTransaction } from "../../components/Form/ButtonTransaction";
-import { SelectButton } from "../../components/Form/SelectButton";
-import { Graduations } from "../Graduations";
-import { InputControle } from "../../components/Form/InputControler/inde";
 
 import { useNavigation } from "@react-navigation/native";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
 import Checkbox from "../../components/Form/CheckBoox";
 
 const storegeKey = "@gofinacens:Transactons";
@@ -41,16 +25,6 @@ export function Seizures() {
     name: string;
     amount: string;
   }
-
-  const navigation = useNavigation();
-
-  const [openModal, setOpenModal] = useState(false);
-  const [transactionType, setTransacationType] = useState("");
-
-  const [category, setCategory] = useState({
-    key: "category",
-    name: "Posto / Graduação",
-  });
 
   const schema = yup
     .object({
@@ -72,29 +46,10 @@ export function Seizures() {
     resolver: yupResolver<yup.AnyObject>(schema),
   });
 
-  function handleOpenModal() {
-    setOpenModal(true);
-  }
-
-  function handleCloseModal() {
-    setOpenModal(false);
-  }
-
   async function handleRegister(form: Form) {
-    const newReport = {};
     try {
-      const allReports = await AsyncStorage.getItem(storegeKey);
-      const currentReports = allReports ? JSON.parse(allReports) : [];
-
-      const reports = [...currentReports, newReport];
-
-      await AsyncStorage.setItem(storegeKey, JSON.stringify(reports));
-
-      // Redirecionando para alguma screen.
-      // navigation.navigate("Listagem");
     } catch (erro) {
-      console.log(erro);
-      Alert.alert("Não foi possível cadastrar");
+      Alert.alert("Não foi possível registrar");
     }
   }
 
@@ -127,6 +82,6 @@ const styles = StyleSheet.create({
     height: 220,
   },
   button: {
-    marginTop: 10,
+    marginTop: 8,
   },
 });

@@ -32,6 +32,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { RootStackParamsList } from "../../routes/register.routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useOccorrence } from "../../hook/useOccurrence";
 
 type InformationScreenProps = NativeStackNavigationProp<
   RootStackParamsList,
@@ -39,6 +40,7 @@ type InformationScreenProps = NativeStackNavigationProp<
 >;
 
 export function Patrolling() {
+  const { handlePatrolling } = useOccorrence();
   const navigation = useNavigation<InformationScreenProps>();
 
   const [openModal, setOpenModal] = useState(false);
@@ -117,7 +119,24 @@ export function Patrolling() {
           name: categoryCmd.name,
         },
       },
+      motorista: {
+        qra: form.qraMot,
+        numeral: form.umMot,
+        categoria: {
+          key: categoryMot.key,
+          name: categoryMot.name,
+        },
+      },
+      patrulheiro: {
+        qra: form.qraPat,
+        numeral: form.umPat,
+        categoria: {
+          key: category.key,
+          name: category.name,
+        },
+      },
     };
+    handlePatrolling(newPatrolling);
     navigation.navigate("Seizures");
   }
 
@@ -234,6 +253,6 @@ export function Patrolling() {
 }
 const styles = StyleSheet.create({
   button: {
-    marginTop: 10,
+    marginTop: 8,
   },
 });

@@ -61,7 +61,7 @@ export function Information() {
 
     const newReport = {
       id: idReport,
-      numeroOcorrencia: form.numeroOrrencia,
+      numeroOcorrencia: form.numeroOcorrencia,
       data: form.data,
       delegacia: form.delegacia,
       endereco: form.delegacia,
@@ -70,7 +70,6 @@ export function Information() {
     };
 
     handleInformation(newReport);
-
     navigation.navigate("Patrolling");
   }
 
@@ -79,7 +78,7 @@ export function Information() {
       <Container>
         <StatusBar barStyle="light-content" />
         <Header>
-          <Title>1ª CIA | BPRE</Title>
+          <Title>Informações</Title>
         </Header>
         <Form>
           <ContainerScroll>
@@ -155,6 +154,6 @@ const styles = StyleSheet.create({
     height: 220,
   },
   button: {
-    marginTop: 10,
+    marginTop: 8,
   },
 });

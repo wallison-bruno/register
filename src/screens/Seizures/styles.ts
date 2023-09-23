@@ -15,7 +15,7 @@ export const ContainerScroll = styled.ScrollView.attrs({
 export const Header = styled.View`
   background-color: ${({ theme }) => theme.colors.primary};
   width: 100%;
-  height: ${RFValue(105)}px;
+  height: ${RFValue(90)}px;
   align-items: center;
   justify-content: flex-end;
 `;
@@ -23,9 +23,10 @@ export const Header = styled.View`
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.secundary};
-  font-size: ${RFValue(30)}px;
+  font-size: ${RFValue(21)}px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: ${RFValue(14)}px;
+  text-transform: uppercase;
 `;
 
 export const Subtitle = styled.Text`
@@ -41,6 +42,7 @@ export const Form = styled.View`
   flex: 1;
   width: 100%;
   padding: 24px;
+  padding-bottom: 8px;
   margin-top: -24px;
 `;
 
