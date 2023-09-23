@@ -6,26 +6,21 @@ import {
   Header,
   Subtitle,
   Container,
-  ButtonsTransactions,
   ContainerScroll,
 } from "./styles";
 
 import {
-  View,
-  Modal,
-  Alert,
   Keyboard,
   StatusBar,
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { InputControle } from "../../components/Form/InputControler/inde";
 import { useNavigation } from "@react-navigation/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../components/Form/Button";
 import { Masks } from "react-native-mask-input";
-
+import { useOccorrence } from "../../hook/useOccurrence";
 import uuid from "react-native-uuid";
 import * as yup from "yup";
 import { RootStackParamsList } from "../../routes/register.routes";
@@ -36,28 +31,9 @@ type InformationScreenProps = NativeStackNavigationProp<
   "Information"
 >;
 
-const storegeKey = "@register:Reports";
-
 export function Information() {
-  interface Form {
-    numeroOrrencia: number;
-    delegacia: string;
-    endereco: string;
-    data: string;
-    local: string;
-    ais: string;
-    relato: string;
-  }
-
+  const { handleInformation } = useOccorrence();
   const navigation = useNavigation<InformationScreenProps>();
-
-  const [openModal, setOpenModal] = useState(false);
-  const [transactionType, setTransacationType] = useState("");
-
-  const [category, setCategory] = useState({
-    key: "category",
-    name: "Posto / Graduação",
-  });
 
   const schema = yup.object().shape({
     numeroOcorrencia: yup
@@ -75,14 +51,14 @@ export function Information() {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver<yup.AnyObject>(schema),
   });
 
-  async function handleRegister(form: yup.AnyObject) {
+  function handleRegisterInformation(form: yup.AnyObject) {
     const idReport = uuid.v4();
+
     const newReport = {
       id: idReport,
       numeroOcorrencia: form.numeroOrrencia,
@@ -92,6 +68,9 @@ export function Information() {
       ais: form.ais,
       relato: form.relato,
     };
+
+    handleInformation(newReport);
+
     navigation.navigate("Patrolling");
   }
 
@@ -163,7 +142,7 @@ export function Information() {
           <Button
             title="Próximo (1/3)"
             style={styles.button}
-            onPress={handleSubmit(handleRegister)}
+            onPress={handleSubmit(handleRegisterInformation)}
           />
         </Form>
       </Container>

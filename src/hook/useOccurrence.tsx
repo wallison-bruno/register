@@ -9,7 +9,6 @@ import React, {
   useState,
 } from "react";
 
-//mudar any para tipos mais espesíficos
 export interface Information {
   id: any;
   numeroOcorrencia: any;
@@ -58,9 +57,13 @@ interface OccorrenceProviderProps {
   children: ReactNode;
 }
 
-interface OccorrenceData {}
+interface OccorrenceData {
+  handleInformation: (information: Information) => void;
+  handlePatrolling: (patrolling: Patrolling) => void;
+  handleSeizures: (information: Seizures) => void;
+}
 
-const storegeKey = "@gofinacens:Transactons";
+const storegeKey = "@register:Occorrence";
 
 export const OccorrenceContext = createContext<OccorrenceData>(
   {} as OccorrenceData
@@ -71,28 +74,33 @@ export function OccorrenceProvider({ children }: OccorrenceProviderProps) {
   const [patrolling, setPatrolling] = useState<Patrolling>();
   const [seizures, setSeizures] = useState<Seizures>();
 
+  // handles
   function handleInformation(information: Information) {
+    console.log(information);
     setInformation(information);
   }
+  function handlePatrolling(patrolling: Patrolling) {
+    setPatrolling(patrolling);
+  }
+  function handleSeizures(information: Seizures) {
+    setSeizures(seizures);
+  }
 
-  //fazer os outros dois handles da corroencia
-
+  // handle save
   async function handleSaveOccorrence(
-    inform: Information,
+    information: Information,
     patrolling: Patrolling,
     seizures: Seizures
   ) {
-    // Veririficar se todos os parametros passados por esste método não estão null
     const newOccorrence = {
-      Informação: inform,
-      Patrulha: patrolling,
-      apreencoes: seizures,
+      information,
+      patrolling,
+      seizures,
     };
 
     try {
       const allOccorrence = await AsyncStorage.getItem(storegeKey);
       const currentOccorrence = allOccorrence ? JSON.parse(allOccorrence) : [];
-
       const transactions = [...currentOccorrence, newOccorrence];
 
       await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
@@ -102,7 +110,9 @@ export function OccorrenceProvider({ children }: OccorrenceProviderProps) {
   }
 
   return (
-    <OccorrenceContext.Provider value={{}}>
+    <OccorrenceContext.Provider
+      value={{ handleInformation, handlePatrolling, handleSeizures }}
+    >
       {children}
     </OccorrenceContext.Provider>
   );

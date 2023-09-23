@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 //import { AuthProvider } from "./src/hook/auth";
 import theme from "./src/global/theme";
 import { Routs } from "./src/routes";
+import { OccorrenceProvider } from "./src/hook/useOccurrence";
 //Loading for fonts
 //import AppLoading from 'expo-app-loading';
 
@@ -28,7 +29,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routs />
+      <OccorrenceProvider>
+        <Routs />
+      </OccorrenceProvider>
     </ThemeProvider>
   );
 }

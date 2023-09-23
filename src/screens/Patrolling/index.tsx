@@ -20,7 +20,7 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
-import { ButtonTransaction } from "../../components/Form/ButtonTransaction";
+
 import { SelectButton } from "../../components/Form/SelectButton";
 import { Graduations } from "../Graduations";
 import { InputControle } from "../../components/Form/InputControler/inde";
@@ -30,8 +30,6 @@ import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
 import { RootStackParamsList } from "../../routes/register.routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -39,8 +37,6 @@ type InformationScreenProps = NativeStackNavigationProp<
   RootStackParamsList,
   "Patrolling"
 >;
-
-const storegeKey = "@gofinacens:Transactons";
 
 export function Patrolling() {
   const navigation = useNavigation<InformationScreenProps>();
