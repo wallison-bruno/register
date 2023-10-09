@@ -4,27 +4,17 @@ import {
   Container,
   Header,
   Title,
-  Position,
-  Form,
-  ButtonsTransactions,
-  ContainerScroll,
 } from "./styles";
 
-import { Button } from "../../components/Form/Button";
 import {
   Keyboard,
-  Modal,
-  View,
   TouchableWithoutFeedback,
   Alert,
   StatusBar,
   StyleSheet,
 } from "react-native";
-import { ButtonTransaction } from "../../components/Form/ButtonTransaction";
-import { SelectButton } from "../../components/Form/SelectButton";
-import { Graduations } from "../Graduations";
-import { InputControle } from "../../components/Form/InputControler/inde";
 
+import { NotFoundScreensPage } from "../../components/NotFoundScreensPage";
 import { useNavigation } from "@react-navigation/native";
 
 import * as yup from "yup";
@@ -130,7 +120,8 @@ export function User() {
         <Header>
           <Title>1ªCIA | BPRE</Title>
         </Header>
-      </Container>
+       <NotFoundScreensPage/>
+      </Container> 
     </TouchableWithoutFeedback>
   );
 }

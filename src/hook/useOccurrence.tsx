@@ -48,9 +48,12 @@ export interface Patrolling {
 }
 
 export interface Seizures {
-  armas: any;
-  drogas: any;
-  veiculos: any;
+  objetos: {
+    armas: any;
+    drogas: any;
+    veiculos: any;
+  }
+  descricao: any;
 }
 
 interface OccorrenceProviderProps {
@@ -92,6 +95,7 @@ export function OccorrenceProvider({ children }: OccorrenceProviderProps) {
     patrolling: Patrolling,
     seizures: Seizures
   ) {
+    
     const newOccorrence = {
       information,
       patrolling,
@@ -102,7 +106,6 @@ export function OccorrenceProvider({ children }: OccorrenceProviderProps) {
       const allOccorrence = await AsyncStorage.getItem(storegeKey);
       const currentOccorrence = allOccorrence ? JSON.parse(allOccorrence) : [];
       const transactions = [...currentOccorrence, newOccorrence];
-
       await AsyncStorage.setItem(storegeKey, JSON.stringify(transactions));
     } catch (erro) {
       console.log(erro);

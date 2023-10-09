@@ -3,19 +3,17 @@ import { CheckboxContainer, CheckboxIcon, CheckboxLabel } from "./styled";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 import theme from "../../../global/theme";
-interface CheckboxProps {
+import { TouchableOpacityProps } from "react-native";
+interface CheckboxProps extends TouchableOpacityProps {
   label: string;
+  isChecked: boolean;
+  
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ label }) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
-  const toggleCheckbox = () => {
-    setIsChecked(!isChecked);
-  };
+const Checkbox: React.FC<CheckboxProps> = ({ label, isChecked, ...rest }) => {
 
   return (
-    <CheckboxContainer onPress={toggleCheckbox} delayLongPress={100}>
+    <CheckboxContainer  delayLongPress={100} {...rest} >
       <CheckboxIcon>
         {isChecked ? (
           <MaterialCommunityIcons

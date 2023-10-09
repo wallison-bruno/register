@@ -19,7 +19,7 @@ export default function RegisterRouts() {
       screenOptions={{ headerShown: false }}
     >
       <Screen name="Information" component={Information} />
-      <Screen name="Patrolling" component={Patrolling} />
+      <Screen name="Patrolling" component={Patrolling} /> 
       <Screen name="Seizures" component={Seizures} />
     </Navigator>
   );
